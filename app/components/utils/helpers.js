@@ -2,7 +2,7 @@
 var axios = require("axios");
 
 // Geocoder API
-var nytAPI = "8b94eaad754b4bbca0e19a51915c6f45";
+var nytKey = "8b94eaad754b4bbca0e19a51915c6f45";
 
 // Helper functions for making API Calls
 var helpers = {
@@ -14,12 +14,12 @@ var helpers = {
 
     // Figure out the geolocation
     
-    var queryURL = "http://api.nytimes.com/svc/search/v1/article?format=json&query=" + searchTerm + "&api-key=" + nytAPI;
+    var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + nytKey + "&q=" + searchTerm;
     axios.get(queryURL).then(function(response) {
       // If get get a result, return that result's formatted address property
-      if (response.data.results[0]) {
+      if (response) {
         console.log(response);
-        return response.data.results[0].formatted;
+        return response.data.response.docs;
       }
       // If we don't get any results, return an empty string
       return "";
@@ -28,16 +28,18 @@ var helpers = {
 
   // This function hits our own server to retrieve the record of query results
   getArticle: function() {
-    return axios.get("/api/saved");
+    return axios.get("/api/saved").then(function(response) {
+      return response.data;
+    }
   },
 
   // This function posts new searches to our database.
-  postArticle: function(location) {
-    return axios.post("/api/saved", { location: location });
+  postArticle: function(articleObj) {
+    return axios.post("/api/saved", { title: articleObj.headline.main, url: articleObj.web_url });
   },
 
-  deleteArticle: function(location) {
-    return axios.delete("/api/saved", { location: location });
+  deleteArticle: function(selectedArticle) {
+    return axios.delete("/api/saved/" + selectedArticle);
   }
 };
 
