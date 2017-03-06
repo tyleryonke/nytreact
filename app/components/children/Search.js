@@ -37,7 +37,7 @@ var Search = React.createClass({
           <form onSubmit={this.handleSubmit}>
             <div className="form-group">
               <h4 className="">
-                <strong>Location</strong>
+                <strong>Topic</strong>
               </h4>
 
               {/*
@@ -50,6 +50,30 @@ var Search = React.createClass({
                 type="text"
                 className="form-control text-center"
                 id="term"
+                onChange={this.handleChange}
+                required
+              />
+              <br />
+              <h4 className="">
+                <strong>Start Year</strong>
+              </h4>
+              <input
+                value={this.state.start}
+                type="number"
+                className="form-control text-center"
+                id="start"
+                onChange={this.handleChange}
+                required
+              />
+              <br />
+              <h4 className="">
+                <strong>End Year</strong>
+              </h4>
+              <input
+                value={this.state.end}
+                type="number"
+                className="form-control text-center"
+                id="end"
                 onChange={this.handleChange}
                 required
               />

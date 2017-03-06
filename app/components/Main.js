@@ -2,9 +2,9 @@
 var React = require("react");
 
 // Here we include all of the sub-components
-var Form = require("./children/Form");
+var Search = require("./children/Search");
 var Results = require("./children/Results");
-var Article = require("./children/Article");
+var Saved = require("./children/Saved");
 
 // Helper for making AJAX requests to our API
 var helpers = require("./utils/helpers");
@@ -36,7 +36,7 @@ var Main = React.createClass({
     // Run the query for the address
     helpers.runQuery(this.state.searchTerm).then(function(data) {
       if (data !== this.state.results) {
-        console.log("Address", data);
+        console.log("Search for:", data);
         this.setState({ results: data });
 
         // After we've received the result... then post the search term to our history.
@@ -70,17 +70,17 @@ var Main = React.createClass({
             </p>
           </div>
 
-          <div className="col-md-6">
+          <div className="row">
 
             <Search setTerm={this.setTerm} />
 
           </div>
 
-          {/*<div className="col-md-6">
+          <div className="row">
 
             <Results address={this.state.results} />
 
-          </div>*/}
+          </div>
 
         </div>
 

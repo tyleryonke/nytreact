@@ -76,8 +76,6 @@ app.post("/api/saved", function(req, res) {
 // This is the route we will send POST requests to save each search.
 app.delete("/api/saved", function(req, res) {
 
-  // Here we'll save the location based on the JSON input.
-  // We'll use Date.now() to always get the current date time
   Article.delete({
    //parameters
   }, function(err) {

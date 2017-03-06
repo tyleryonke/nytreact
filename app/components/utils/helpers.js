@@ -5,18 +5,20 @@ var axios = require("axios");
 var nytAPI = "8b94eaad754b4bbca0e19a51915c6f45";
 
 // Helper functions for making API Calls
-var helper = {
+var helpers = {
 
   // This function serves our purpose of running the query to geolocate.
-  runQuery: function(location) {
+  runQuery: function(searchTerm) {
 
-    console.log(location);
+    console.log(searchTerm);
 
     // Figure out the geolocation
-    var queryURL = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + location + "&fq=source:("The New York Times")&page=0&sort=oldest&api-key=" + nytAPI;
-    return axios.get(queryURL).then(function(response) {
+    
+    var queryURL = "http://api.nytimes.com/svc/search/v1/article?format=json&query=" + searchTerm + "&api-key=" + nytAPI;
+    axios.get(queryURL).then(function(response) {
       // If get get a result, return that result's formatted address property
       if (response.data.results[0]) {
+        console.log(response);
         return response.data.results[0].formatted;
       }
       // If we don't get any results, return an empty string
@@ -40,4 +42,4 @@ var helper = {
 };
 
 // We export the API helper
-module.exports = helper;
+module.exports = helpers;
